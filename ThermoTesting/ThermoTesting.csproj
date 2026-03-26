@@ -1,0 +1,106 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ModId>thermotesting</ModId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(Configuration)\Mods\mod</OutputPath>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="OpenTK.Graphics">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Lib\OpenTK.Graphics.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VintagestoryAPI">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\VintagestoryAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VSSurvivalMod">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Mods\VSSurvivalMod.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VSEssentials">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Mods\VSEssentials.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VSCreativeMod">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Mods\VSCreativeMod.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Lib\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Lib\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VintagestoryLib">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\VintagestoryLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Lib\protobuf-net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="cairo-sharp">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Lib\cairo-sharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Sqlite">
+      <HintPath>$(VINTAGE_STORY_LOCAL)\Lib\Microsoft.Data.Sqlite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+<ItemGroup>
+  <Content Include="modinfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
+
+<ItemGroup>
+  <Content Include="modicon.png" Condition="Exists('modicon.png')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
+
+<ItemGroup>
+  <None Include="assets\**\*.*" />
+</ItemGroup>
+
+<Target Name="SyncModAssets" AfterTargets="Build">
+<PropertyGroup>
+<SrcAssetsDir>$(ProjectDir)assets\$(ModId)</SrcAssetsDir>
+<DstAssetsDir>$(TargetDir)assets\$(ModId)</DstAssetsDir>
+</PropertyGroup>
+
+
+<MakeDir Directories="$(DstAssetsDir)" />
+
+
+<!-- 1) Copy all assets EXCEPT .vert/.frag via robocopy -->
+<Exec Command="robocopy &quot;$(SrcAssetsDir)&quot; &quot;$(DstAssetsDir)&quot; /MIR /XF *.vert *.frag /NFL /NDL /NJH /NJS /NP" IgnoreExitCode="true" />
+
+
+<!-- 2) Copy shaders with extension transform (no rename step needed) -->
+<ItemGroup>
+<_VertShaders Include="$(SrcAssetsDir)\**\*.vert" />
+<_FragShaders Include="$(SrcAssetsDir)\**\*.frag" />
+</ItemGroup>
+
+
+<!-- Copy .vert -> .vsh -->
+<Copy SourceFiles="@(_VertShaders)" DestinationFiles="@(_VertShaders->'$(DstAssetsDir)\%(RecursiveDir)%(Filename).vsh')" SkipUnchangedFiles="true" />
+
+
+<!-- Copy .frag -> .fsh -->
+<Copy SourceFiles="@(_FragShaders)" DestinationFiles="@(_FragShaders->'$(DstAssetsDir)\%(RecursiveDir)%(Filename).fsh')" SkipUnchangedFiles="true" />
+</Target>
+
+
+</Project>

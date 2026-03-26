@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThermoTesting", "ThermoTesting\ThermoTesting.csproj", "{F4004B5D-186A-4565-B9FC-857D28079589}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBuild", "ZZCakeBuild\CakeBuild.csproj", "{6A3FEB03-28C5-4CFD-8DAD-321051E66C90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4004B5D-186A-4565-B9FC-857D28079589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4004B5D-186A-4565-B9FC-857D28079589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4004B5D-186A-4565-B9FC-857D28079589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4004B5D-186A-4565-B9FC-857D28079589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A3FEB03-28C5-4CFD-8DAD-321051E66C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A3FEB03-28C5-4CFD-8DAD-321051E66C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A3FEB03-28C5-4CFD-8DAD-321051E66C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A3FEB03-28C5-4CFD-8DAD-321051E66C90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F126573-06B6-4156-8D67-1C3662A9710E}
+	EndGlobalSection
+EndGlobal
