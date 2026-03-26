@@ -72,7 +72,7 @@ public class ThermoTestingModSystem : ModSystem
         var parsers = api.ChatCommands.Parsers;
         AssetLocation sound = new AssetLocation("game", "sounds/tutorialstepsuccess");
         api.ChatCommands.Create("wi")
-        .WithDescription("gives a half-copper, half-steel demo workitem")
+        .WithDescription("gives a half-copper, half-blackbronze demo workitem")
         .RequiresPrivilege(Privilege.chat)
         .RequiresPlayer()
         .HandleWith((args) =>
@@ -85,7 +85,7 @@ public class ThermoTestingModSystem : ModSystem
 
             List<byte> materials = new List<byte>();
             materials.Add(0b00000001); // Metal (base workitem material, which is copper in this case)
-            materials.Add(0b00001000); // Steel (index 17 in the VoxelMaterials enum)
+            materials.Add(0b00001000); // Blackbronze (index 8 in the VoxelMaterials enum)
 
             byte[,,] voxels = new byte[16, 6, 16];
             for (int x = 0; x < 7; x++)
