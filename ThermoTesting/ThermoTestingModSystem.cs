@@ -95,7 +95,7 @@ public class ThermoTestingModSystem : ModSystem
                     for (int z = 0; z < 3; z++)
                     {
                         if (x < 3) voxels[4 + x, y, 6 + z] = 1;
-                        else voxels[4 + x, y, 6 + z] = 3; // Artefact of how the added material indexing system works, this should be streamlined.
+                        else voxels[4 + x, y, 6 + z] = 3; // Artifact of how the added material indexing system works, this should be streamlined.
                     }
                 }
             }
