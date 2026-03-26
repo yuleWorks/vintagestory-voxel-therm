@@ -23,8 +23,6 @@ public class PatchBEForgeOnCommonTick
     {
         ItemStack contents = contentsRef(__instance);
         
-
-        // need to add a lookup to see if the contents exist within the lookup table already
         if (contents != null)
         {
             int hash = contents.GetHashCode();

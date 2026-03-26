@@ -26,7 +26,6 @@ namespace ThermoTesting.patches
 
 
             public bool isMeshDirty = true;
-            TemperatureTexture floatLookupTexture;
 
             public ThermoData() { }
             public ThermoData(float[,,] in_voxelTemperatures)

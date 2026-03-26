@@ -96,19 +96,13 @@ namespace ThermoTesting.patches
             _glowRgb.G = glowColor[1];
             _glowRgb.B = glowColor[2];
             _glowRgb.A = (float)extraGlow / 255f;
-            // need to move the glowRGB calculations to the GPU using the passed temps now. 
-
-
-
+          
 
             rpi.GlDisableCullFace();
-            //IShaderProgram anvilShaderProg = _coreMod.anvilShaderProg;
             IShaderProgram anvilShaderProg = _api.Shader.GetProgramByName("anvilworkitempatch");
             anvilShaderProg.Use();
             rpi.BindTexture2d(_texId);
 
-            //anvilShaderProg.BindTexture2D("uTempTex", 0, 1);
-            //anvilShaderProg.Uniform("uTempTex", 1);
             int prevActive;
             GL.GetInteger(GetPName.ActiveTexture, out prevActive);
 
