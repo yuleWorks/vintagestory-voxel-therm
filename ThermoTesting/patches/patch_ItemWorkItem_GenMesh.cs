@@ -26,7 +26,7 @@ namespace ThermoTesting.patches
             if (thermoInfo != null) { hasThermoInfo = true; }
             float[,,] voxelTemps = null;
 
-            if(hasThermoInfo)
+            if (hasThermoInfo)
             {
                 voxelTemps = thermoInfo.voxelTemperatures;
             }
@@ -109,7 +109,7 @@ namespace ThermoTesting.patches
                 Count = metalVoxelMesh.VerticesCount,
                 Values = new byte[metalVoxelMesh.VerticesCount]
             };
-            if(hasThermoInfo && CUSTOM_MESH_DATA_ACTIVE) ///////////////////////////
+            if (hasThermoInfo && CUSTOM_MESH_DATA_ACTIVE) ///////////////////////////
             {
                 metalVoxelMesh.CustomInts = new CustomMeshDataPartInt
                 {
@@ -180,7 +180,7 @@ namespace ThermoTesting.patches
             MeshData slagVoxOffset = slagVoxelMesh.Clone();
             List<MeshData> addedMatVoxOffsets = new List<MeshData>();
             int voxelCount = 0;
-            int[] voxelIndexMap = new int[16*6*16];
+            int[] voxelIndexMap = new int[16 * 6 * 16];
 
             if (materialsBytes != null)
             {
@@ -221,9 +221,6 @@ namespace ThermoTesting.patches
                                     meshVoxOffset = addedMatVoxOffsets[index];
                                 }
 
-                                //MeshData mesh = (mat == VoxelMaterials.Metal) ? metalVoxelMesh : slagVoxelMesh;
-                                //MeshData meshVoxOffset = (mat == VoxelMaterials.Metal) ? metVoxOffset : slagVoxOffset;
-
                                 for (int k = 0; k < mesh.xyz.Length; k += 3)
                                 {
                                     meshVoxOffset.xyz[k] = px + mesh.xyz[k];
@@ -244,6 +241,15 @@ namespace ThermoTesting.patches
                                     byte glowSub = (byte)GameMath.Clamp(10 * (Math.Abs(x - 8) + Math.Abs(z - 8) + Math.Abs(y - 2)), 100, 250);
                                     meshVoxOffset.CustomBytes.Values[m] = (byte)((mat == VoxelMaterials.Metal || (byte)mat > 3) ? 0 : glowSub);
                                 }
+
+                                if ((hasThermoInfo && voxelTemps != null) && CUSTOM_MESH_DATA_ACTIVE)
+                                {
+                                    for (int n = 0; n < meshVoxOffset.CustomInts.Values.Length; n++)
+                                    {
+                                        meshVoxOffset.CustomInts.Values[n] = voxelCount;
+                                    }
+                                }
+                                voxelCount += 1;
                                 workItemMesh.AddMeshData(meshVoxOffset);
                             }
                         }
@@ -294,7 +300,6 @@ namespace ThermoTesting.patches
                                         meshVoxOffset.CustomInts.Values[n] = voxelCount;
                                     }
                                 }
-                                //voxelIndexMap[voxelCount] = voxelCount;
                                 voxelCount += 1;
                                 workItemMesh.AddMeshData(meshVoxOffset);
                             }

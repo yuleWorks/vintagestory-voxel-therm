@@ -69,10 +69,58 @@ public class ThermoTestingModSystem : ModSystem
         api.Event.GameWorldSave += OnSaveGameSaving;
 
 
+        var parsers = api.ChatCommands.Parsers;
+        AssetLocation sound = new AssetLocation("game", "sounds/tutorialstepsuccess");
+        api.ChatCommands.Create("wi")
+        .WithDescription("gives a half-copper, half-steel demo workitem")
+        .RequiresPrivilege(Privilege.chat)
+        .RequiresPlayer()
+        .HandleWith((args) =>
+        {
+            ItemStack stack = new ItemStack();
+            int recipeId = (from r in api.GetSmithingRecipes()
+                            where r.Ingredient.Code.EndVariant() == "copper" && r.Name.ToShortString() == "falx"
+                            orderby r.Output.ResolvedItemstack.Collectible.Code
+                            select r).ToList()[0].RecipeId;
+
+            List<byte> materials = new List<byte>();
+            materials.Add(0b00000001); // Metal (base workitem material, which is copper in this case)
+            materials.Add(0b00010001); // Steel (index 17 in the VoxelMaterials enum)
+
+            byte[,,] voxels = new byte[16, 6, 16];
+            for (int x = 0; x < 7; x++)
+            {
+                for (int y = 0; y < 2; y++)
+                {
+                    for (int z = 0; z < 3; z++)
+                    {
+                        if (x < 3) voxels[4 + x, y, 6 + z] = 1;
+                        else voxels[4 + x, y, 6 + z] = 3; // Artefact of how the added material indexing system works, this should be streamlined.
+                    }
+                }
+            }
+
+            ItemStack wiStack = new ItemStack(api.World.GetItem(new AssetLocation("game:workitem-copper")), 1);
+            //wiStack.Collectible.SetTemperature(api.World, stack, 30.0f, true);
+            wiStack.Attributes.SetBytes("voxels", BlockEntityAnvil.serializeVoxels(voxels));
+            wiStack.Attributes.SetInt("selectedRecipeId", recipeId);
+            wiStack.Attributes.SetInt("rotation", 270);
+            wiStack.Attributes.SetBytes("addedMats", materials.ToArray());
+            stack = wiStack;
+
+            if (args.Caller.Player.InventoryManager.TryGiveItemstack(stack))
+            {
+                var byEntity = args.Caller.Entity;
+                byEntity.World.PlaySoundAt(sound, byEntity);
+                return TextCommandResult.Success("workitem given");
+            }
+            return TextCommandResult.Error("no free slot");
+        });
+
         //harmonyServer.CreateClassProcessor(typeof(PatchBEForgeOnCommonTick)).Patch();
         //harmonyServer.CreateClassProcessor(typeof(PatchBEAnvilToTreeAttributes)).Patch();
         //harmonyServer.CreateClassProcessor(typeof(PatchBEAnvilFromTreeAttributes)).Patch();
-        
+
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
