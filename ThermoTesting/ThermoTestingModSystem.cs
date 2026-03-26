@@ -85,7 +85,7 @@ public class ThermoTestingModSystem : ModSystem
 
             List<byte> materials = new List<byte>();
             materials.Add(0b00000001); // Metal (base workitem material, which is copper in this case)
-            materials.Add(0b00010001); // Steel (index 17 in the VoxelMaterials enum)
+            materials.Add(0b00001000); // Steel (index 17 in the VoxelMaterials enum)
 
             byte[,,] voxels = new byte[16, 6, 16];
             for (int x = 0; x < 7; x++)
