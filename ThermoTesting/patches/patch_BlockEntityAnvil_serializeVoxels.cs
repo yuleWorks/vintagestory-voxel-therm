@@ -12,8 +12,6 @@ namespace ThermoTesting.patches
     {
         public static bool Prefix(byte[,,] voxels, ref byte[] __result)
         {
-            //1536 default
-            //1536/3 = 512
             byte[] data = new byte[576];
             int arrayPos = 0;
             for (int x = 0; x < 16; x++)
@@ -23,10 +21,6 @@ namespace ThermoTesting.patches
                     for (int z = 0; z < 2; z++)
                     {
                         byte[] array = data;
-                        /*
-                        array[arrayPos] != (byte)((voxels[x,y,z
-                        //    11122233 34445556 66777888
-                        */
                         array[arrayPos] |= (byte)((voxels[x, y, z * 8 + 0] & 0b00000111) << 5);
 
                         array[arrayPos] |= (byte)((voxels[x, y, z * 8 + 1] & 0b00000111) << 2);
