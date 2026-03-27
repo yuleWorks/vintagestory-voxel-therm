@@ -24,6 +24,14 @@ To support this, multiple parts of the base game are modified through patching:
 The system introduces an external voxel data system integrated into the game via runtime patches.
 Patching is done through Harmony. Reflection is used to access private fields in several instances.
 
+## Rendering Approach
+ - Flattens volumetric temperature data into a 1D array
+ - Injects per-vertex indices into vertex attributes to reference temperature data
+ - Converts the 1D array to a 1D texture lookup for temperature-based color mapping in shader
+ - Custom shader logic interprets encoded data per vertex
+
+Assigning vertex indices at mesh generation time and uploading the temperature data as a separate lookup allows for dynamic temperature changes without mesh reconstruction and reupload.
+
 ### Components:
  - External data system for storing per-voxel temperature data for each workitem
  - Engine patches that access the external temperature data
