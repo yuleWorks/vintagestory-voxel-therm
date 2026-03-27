@@ -37,7 +37,23 @@ Patching is done through Harmony. Reflection is used to access private fields in
 
 This allows per-voxel materials and temperatures to be rendered.
 
+## Build Structure
+
+This project is intended to be built within a specific project structure:
+
+```
+VintageStoryInstances/
+└── VintageStory_[VERSION]/
+    ├── VintageStory/         (install folder)
+    ├── VintageStoryData/     (install data folder)
+    └── Projects/
+        ├── Directory.Build.props
+        └── [ThermoTesting]/  (mod project folder)
+```
+The build scripts and dependencies are relative and this structure ensures that everything is found properly.
+`Directory.Build.props` is included in the repository and should be placed in the `Projects/` directory as shown above.
+
 ## Status
-Active / In Progress
+**Active Development**
 
 This project is an ongoing exploration of voxel-based thermal simulations. I plan on expanding it to support material-based thermal simulations, and investigating GPU-based thermal simulations in the future.
