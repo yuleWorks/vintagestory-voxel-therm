@@ -23,15 +23,17 @@ public class PatchBEForgeOnCommonTick
     {
         ItemStack contents = contentsRef(__instance);
         
+
+        //need to add a lookup to see if the contents exist within the lookup table already
         if (contents != null)
         {
             int hash = contents.GetHashCode();
             byte[,,] voxels = BlockEntityAnvil.deserializeVoxels(contents.Attributes.GetBytes("voxels", null));
             if (voxels == null)
             {
-                // Ripped from ItemIngot.CreateVoxelsFromIngot to remove blister steel option
-                // This is just to create temperature voxels for ingots placed within forge, since they have not
-                //  yet been turned into workitems and do not have voxels yet. This pre-generates a voxel structure 
+                //Ripped from ItemIngot.CreateVoxelsFromIngot to remove blister steel option
+                //This is just to create temperature voxels for ingots placed within forge, since they have not
+                //  yet been turned into workitems and do not have voxels yet. This pregenerates a voxel structure 
                 //  that temperatures can be assigned to.
                 voxels = new byte[16, 6, 16];
                 for (int x = 0; x < 7; x++)
@@ -46,11 +48,15 @@ public class PatchBEForgeOnCommonTick
                 }
             }
 
+            //ExternalData.SetTemperatureData(contents, ExternalData.GetHomogenousTemperatureArrayFromMask(voxels, 69.0f));
             float[,,] temperatures;
             float[] flatTemperatures;
 
             ExternalData.GetRandomTemperatureArrayFromMaskDualReturn(voxels, out temperatures, out flatTemperatures);
             ExternalData.AddOrUpdateTemperatureDataDual(contents, temperatures, flatTemperatures);
+
+            //ExternalData.AddOrUpdateTemperatureData(contents, ExternalData.GetRandomTemperatureArrayFromMask(voxels));
         }
+        //tree.SetBytes("temperatureVoxels", );
     }
 }

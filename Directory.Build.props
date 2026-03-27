@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <VINTAGE_STORY_LOCAL>$(MSBuildThisFileDirectory)..\Vintagestory</VINTAGE_STORY_LOCAL>
+	<VINTAGE_STORY_DATA_LOCAL>$(MSBuildThisFileDirectory)..\VintagestoryData</VINTAGE_STORY_DATA_LOCAL>
+  </PropertyGroup>
+</Project>
