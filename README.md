@@ -48,7 +48,7 @@ VintageStoryInstances/
     ├── VintageStoryData/     (install data folder)
     └── Projects/
         ├── Directory.Build.props
-        └── [ThermoTesting]/  (mod project folder)
+        └── ThermoTesting/    (mod project folder)
 ```
 The build scripts and dependencies are relative and this structure ensures that everything is found properly.
 `Directory.Build.props` is included in the repository and should be placed in the `Projects/` directory as shown above.
